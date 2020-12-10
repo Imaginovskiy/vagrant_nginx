@@ -1,0 +1,20 @@
+---
+- name: "install nginx"
+  apt:
+    name: ['nginx']
+    state: latest
+
+- name: delete default nginx page
+  file:
+    path: /var/www/html/index.nginx-debian.html
+    state: absent
+  notify: restart nginx
+
+- name: copy index.html
+  template:
+    src: helloworld.html
+    dest: /var/www/html/index.html
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nginx

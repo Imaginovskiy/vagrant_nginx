@@ -1,0 +1,26 @@
+---
+- name: gather facts
+  hosts: all
+  tasks:
+    - debug:
+        var: ansible_all_ipv4_addresses
+
+- hosts: application
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  vars_files:
+    - vars/all.yml
+  roles:
+    - common
+    - application
+
+- hosts: loadbalancer
+  gather_facts: no
+  become: yes
+  become_method: sudo
+  vars_files:
+    - vars/all.yml
+  roles:
+    - common
+    - proxy

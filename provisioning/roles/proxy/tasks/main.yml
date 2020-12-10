@@ -1,0 +1,32 @@
+---
+- name: "install nginx"
+  apt:
+    name: ['nginx']
+    state: latest
+
+- name: delete default nginx page
+  file:
+    path: /var/www/html/index.nginx-debian.html
+    state: absent
+  notify: restart nginx
+
+- name: delete default nginx site
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: restart nginx
+
+- name: create loadbalancer config
+  template:
+    src: loadbalancer.conf
+    dest: /etc/nginx/conf.d/loadbalancer.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nginx
+  with_items:
+    - "{{ groups['application'] }}"
+
+- name: Print all facts
+  ansible.builtin.debug:
+    var: ansible_facts

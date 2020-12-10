@@ -1,0 +1,3 @@
+---
+# vars file for provisioning/roles/application
+application_servers: "{{ groups['application'] | to_yaml }}"
