@@ -46,6 +46,8 @@ Due to time constraints during development of this project I did not get a chanc
 
 One improvement that could be made is setting up SSL for the load balancer, we could integrate a service like letsencrypt to generate a cert, or use openssl for self-signed CA for a test domain. This would mean expanding ansible to deal with domains in the proxy role.
 
+This would require further configuration of properties like HSTS and Cipher suites but this can be dealt with as an addition to the proxy role.
+
 ### Functionality
 
 Ideally I would have liked to have deployed a test application using python flask to setup a dummy application that is a little more impressive than displaying hello world in HTML but I had a time constraint regarding this.
