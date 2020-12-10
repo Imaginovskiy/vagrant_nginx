@@ -35,3 +35,33 @@ vagrant up
 ```
 
 Once created the loadbalancer will be available at http://172.19.120.10 serving from the application instances.
+
+## Considerations
+
+Due to time constraints during development of this project I did not get a chance to expand the project to include a DB/dynamic web application which would've provided a more useful example of my skills in this area.
+
+## Improvements
+
+### Security
+
+One improvement that could be made is setting up SSL for the load balancer, we could integrate a service like letsencrypt to generate a cert, or use openssl for self-signed CA for a test domain. This would mean expanding ansible to deal with domains in the proxy role.
+
+### Functionality
+
+Ideally I would have liked to have deployed a test application using python flask to setup a dummy application that is a little more impressive than displaying hello world in HTML but I had a time constraint regarding this.
+
+Better yet setting up and hosting a simple django application would've been nice as it would've allowed me to expand this to include a PostgresQL database, this would require additions to Vagrantfile for the VM and also a new DB role to be configured.
+
+# Roles
+
+## Common
+
+Runs apt-get update on new instances and deploys some packages needed for DNS, although this can be ignored as I was just testing an idea for the loadbalancer to use DNS to find upstream servers in order to make it more dynamic.
+
+## Application
+
+Deploys nginx to an isntance with required configuration to display helloworld
+
+## Proxy
+
+Deploys nginx as a loadbalancer with required configuration. In loadbalancer.conf template we are getting the IP's of the instances in the application group which we then use to populate the upstream server endpoints in the configuration file. This is dealt with dynamically so that increasing the 'NUMBER_OF_WORKERS' parameter will automatically be accounted for in configs.
