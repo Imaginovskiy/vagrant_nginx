@@ -23,10 +23,6 @@ ANSIBLE_INVENTORY_DIR = "inventory"
       application.vm.hostname = "application-#{i}"
       application.vm.network :private_network, ip: "172.19.120.#{10 + i}"
       application.ssh.forward_agent = true
-
-      application.vm.provision "allow_guest_host_resolution",
-        type: "shell",
-        inline: 'apt-get install -y avahi-daemon libnss-mdns'
       end
   end
 

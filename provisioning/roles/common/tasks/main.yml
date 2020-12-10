@@ -5,3 +5,7 @@
     upgrade: yes
     update_cache: yes
     cache_valid_time: 3600 # An Hour
+- name: Install required pkgs for DNS
+  apt:
+    name: ['avahi-daemon', 'libnss-mdns']
+    state: latest
